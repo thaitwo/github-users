@@ -43,6 +43,16 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/*
+** Fonts
+**
+*/
+/*
+** Colors
+**
+*/
+/* LAYOUT
+===================================================== */
 .l-pinned {
   bottom: 0;
   left: 0;
@@ -53,35 +63,61 @@ table {
 .l-pad-top-1 {
   padding-top: 8px; }
 
+.l-pad-bottom-1 {
+  padding-bottom: 8px; }
+
 .l-pad-top-2 {
   padding-top: 16px; }
+
+.l-pad-bottom-2 {
+  padding-bottom: 16px; }
 
 .l-pad-top-3 {
   padding-top: 24px; }
 
+.l-pad-bottom-3 {
+  padding-bottom: 24px; }
+
 .l-pad-top-4 {
   padding-top: 32px; }
+
+.l-pad-bottom-4 {
+  padding-bottom: 32px; }
 
 .l-pad-top-5 {
   padding-top: 40px; }
 
+.l-pad-bottom-5 {
+  padding-bottom: 40px; }
+
 .l-pad-top-6 {
   padding-top: 48px; }
+
+.l-pad-bottom-6 {
+  padding-bottom: 48px; }
 
 .l-pad-top-7 {
   padding-top: 56px; }
 
+.l-pad-bottom-7 {
+  padding-bottom: 56px; }
+
 .l-pad-top-8 {
   padding-top: 64px; }
 
+.l-pad-bottom-8 {
+  padding-bottom: 64px; }
+
+/* SEARCH BOX
+===================================================== */
 .search-box {
   margin: auto; }
   .search-box input {
-    background-color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.04);
     border: none;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
     color: rgba(0, 0, 0, 0.8);
-    font-family: "Montserrat", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 36px;
@@ -92,51 +128,89 @@ table {
     width: 300px; }
     .search-box input[type="text"]::-webkit-input-placeholder {
       color: rgba(0, 0, 0, 0.24);
-      font-family: "Montserrat", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 400;
       transition: all .3s; }
     .search-box input:hover, .search-box input:focus {
-      border-bottom: 2px solid rgba(255, 88, 88, 0.56); }
+      background-color: rgba(0, 0, 0, 0.02);
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.12); }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  transition: background-color 5000s ease-in-out 0s; }
+
+/* USER CARD
+===================================================== */
 .user-card {
-  font-family: "Montserrat", sans-serif;
-  height: 100%;
+  font-family: "Roboto", sans-serif;
+  bottom: 0;
+  overflow: auto;
+  position: absolute;
   padding: 0 40px;
-  overflow: auto; }
+  top: 100px; }
   .user-card .user-info {
-    height: 240px;
-    width: 180px; }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    margin: 0 180px;
+    padding-bottom: 40px; }
+    .user-card .user-info .username {
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 32px; }
+    .user-card .user-info .follower-title {
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 18px; }
+    .user-card .user-info .follower-count {
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 18px; }
   .user-card ul.followers {
     margin-top: 20px; }
     .user-card ul.followers li {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgba(0, 0, 0, 0.04);
       border-radius: 3px;
       display: inline-block;
       font-size: 14px;
+      height: 200px;
       margin: 10px;
-      padding: 10px; }
-      .user-card ul.followers li img {
-        border-radius: 200px;
-        display: block;
-        height: 100px;
-        margin: 40px auto 20px;
-        width: 100px; }
+      padding: 10px;
+      transition: all .3s;
+      width: 180px; }
+      .user-card ul.followers li:hover {
+        background-color: rgba(0, 0, 0, 0.01);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
+        cursor: pointer; }
+        .user-card ul.followers li:hover img {
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24); }
+      .user-card ul.followers li a {
+        color: rgba(0, 0, 0, 0.8);
+        text-decoration: none; }
+        .user-card ul.followers li a img {
+          border: 6px solid #FFFFFF;
+          border-radius: 200px;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24);
+          display: block;
+          height: 100px;
+          margin: 20px auto;
+          transition: all .3s;
+          width: 100px; }
   .user-card button.load-more {
-    background: rgba(38, 50, 56, 0.12);
+    background: #1E88E5;
     border: none;
     border-radius: 2px;
     color: white;
     cursor: pointer;
     display: none;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 14px;
     height: 36px;
-    margin: auto;
+    margin: 20px auto 40px;
     outline: none;
     padding: 0 20px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    transition: all .3s; }
     .user-card button.load-more.is-visible {
       display: block; }
+    .user-card button.load-more:hover {
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24); }
 
 .app-container {
   background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
@@ -156,7 +230,6 @@ table {
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.24);
   left: 40px;
   overflow: hidden;
-  padding: 0 40px;
   position: fixed;
   right: 40px;
   text-align: center;

@@ -79,7 +79,8 @@
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Import scss file for webpack to compile
+
 
 __webpack_require__(0);
 
@@ -94,7 +95,7 @@ var App = function () {
     this.$userCard = $('#card');
     this.$userInfoContainer = $('#user-info');
     this.$followersContainer = $('#user-followers');
-    this.$loadMoreButton = $('.load-more');
+    this.$loadButton = $('.load-more');
     this.username;
     this.followerCount;
     this.getSearchValue();
@@ -109,7 +110,7 @@ var App = function () {
       var that = this;
 
       this.$searchInput.keypress(function (event) {
-        that.username = event.target.value; //username
+        that.username = event.currentTarget.value; //username
 
         if (event.which == 13) {
           event.preventDefault();
@@ -118,7 +119,10 @@ var App = function () {
 
           that.getFollowers(that.username);
 
-          that.activateLoadMoreButton(that.username);
+          that.activateLoadButton(that.username);
+
+          // Clearn input field
+          that.$searchInput.val('');
         }
       });
     }
@@ -134,7 +138,6 @@ var App = function () {
         url: 'https://api.github.com/users/' + username,
         dataType: 'jsonp',
         success: function success(data) {
-          // console.log(data);
           that.createUserCard(data);
         }
       });
@@ -145,10 +148,13 @@ var App = function () {
   }, {
     key: 'createUserCard',
     value: function createUserCard(data) {
-      var handle = data.data.login;
+      // Set follower count
       this.followerCount = data.data.followers;
+      var handle = data.data.login;
 
-      var cardHTML = '\n        <div>Handle: ' + handle + '</div>\n        <div>Follower Count: ' + this.followerCount + '</div>\n      ';
+      // Render HTML for user card
+      var cardHTML = '\n        <div class="username">' + handle + '</div>\n        <div class="l-pad-top-4">\n          <h4 class="follower-title">Followers</h4>\n          <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n        </div>\n      ';
+
       this.$userInfoContainer.empty();
       this.$userInfoContainer.append(cardHTML);
     }
@@ -158,18 +164,18 @@ var App = function () {
   }, {
     key: 'getFollowers',
     value: function getFollowers(username) {
-      var _this = this;
-
       var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
       var that = this;
+      var counter = 0;
 
       $.ajax({
         url: 'https://api.github.com/users/' + username + '/followers?per_page=40&page=' + count,
         dataType: 'jsonp',
         success: function success(data) {
-          // console.log(this.followerCount);
-          // console.log(data);
+          counter = counter + data.data.length;
+          console.log('THIS COUNT', that.followerCount);
+          console.log('STORED COUNT', counter);
           var storedUsername = username;
 
           // Render a list of all the followers
@@ -177,15 +183,20 @@ var App = function () {
 
           // If new username is passed, empty followers container
           if (storedUsername !== username) {
-            _this.$followersContainer.empty();
+            that.$followersContainer.empty();
           }
 
           // Append the list of followers into the followers container
-          _this.$followersContainer.append(listOfFollowers);
+          that.$followersContainer.append(listOfFollowers);
 
           // If user has more than 40 followers, insert 'Load More' button
-          if (_this.followerCount > 40) {
-            _this.$loadMoreButton.addClass('is-visible');
+          if (that.followerCount > 40) {
+            that.$loadButton.addClass('is-visible');
+          }
+
+          if (counter >= that.followerCount) {
+            console.log('button removed');
+            that.$loadButton.removeClass('is-visible');
           }
         }
       });
@@ -196,25 +207,26 @@ var App = function () {
   }, {
     key: 'createFollowersList',
     value: function createFollowersList(data) {
-      console.log(data.data);
 
       return data.data.map(function (user) {
+        var htmlLink = user.html_url;
         var imageLink = user.avatar_url;
         var username = user.login;
 
-        return '\n      <li>\n        <img src="' + imageLink + '">\n        <span>' + username + '</span>\n      </li>\n      ';
+        // Render HTML for list of followers
+        return '\n      <li>\n        <a href="' + htmlLink + '" target="_blank">\n          <img src="' + imageLink + '">\n          <span>' + username + '</span>\n        </a>\n      </li>\n      ';
       }).join('');
     }
 
     // LOAD MORE FOLLOWERS WHEN 'LOAD MORE' BUTTON IS CLICKED
 
   }, {
-    key: 'activateLoadMoreButton',
-    value: function activateLoadMoreButton(username) {
+    key: 'activateLoadButton',
+    value: function activateLoadButton(username) {
       var that = this;
       var count = 1;
 
-      this.$loadMoreButton.on('click', function (event) {
+      this.$loadButton.on('click', function (event) {
         event.preventDefault();
         count = count + 1;
 

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="public/css/style.compile.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
   <script src="https://use.fontawesome.com/c05b0eed4c.js"></script>
+  <link rel="stylesheet" href="public/css/style.compile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <title>GitHubers</title>
 </head>
 
@@ -13,21 +15,23 @@
       <h1><a href="./index.html" class="logo">GitHubers</a></h1>
     </div>
 
-    <div class="canvas">
-      <form onclick="" class="search-box l-pad-top-4">
-        <input type="text" id="input" placeholder="Search username">
-      </form>
+    <div class="animated fadeIn">
+      <div class="canvas">
+        <form onclick="" class="search-box l-pad-top-4">
+          <input type="text" id="input" placeholder="Search username">
+        </form>
 
-      <div id="card" class="user-card l-pad-top-8">
-        <div id="user-info" class="user-info">
-          <!-- Insert user's GitHub handle and follower count here -->
-        </div>
+        <div id="card" class="user-card l-pad-top-8 animated fadeIn">
+          <div id="user-info" class="user-info l-pad-top-4">
+            <!-- Insert user's GitHub handle and follower count here -->
+          </div>
 
-        <div class="l-pad-top-4">
-          <ul id="user-followers" class="followers">
-            <!-- Insert list of followers here -->
-          </ul>
-          <button class="load-more">Load More</button>
+          <div class="l-pad-top-4">
+            <ul id="user-followers" class="followers">
+              <!-- Insert list of followers here -->
+            </ul>
+            <button class="load-more">Load More</button>
+          </div>
         </div>
       </div>
     </div>
