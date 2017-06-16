@@ -1,0 +1,52 @@
+.user-card {
+  font-family: $font-primary;
+  height: 100%;
+  padding: 0 40px;
+  overflow: auto;
+
+  .user-info {
+    height: 240px;
+    width: 180px;
+  }
+
+  ul.followers {
+    margin-top: 20px;
+
+    li {
+      background-color: rgba(0,0,0,.05);
+      border-radius: 3px;
+      display: inline-block;
+      font-size: 14px;
+      margin: 10px;
+      padding: 10px;
+
+      img {
+        border-radius: 200px;
+        display: block;
+        height: 100px;
+        margin: 40px auto 20px;
+        width: 100px;
+      }
+    }
+  }
+
+  button.load-more {
+    background: rgba($bluegrey-900, .12);
+    border: none;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+    display: none;
+    font-family: $font-primary;
+    font-size: 14px;
+    height: 36px;
+    margin: auto;
+    outline: none;
+    padding: 0 20px;
+    text-transform: uppercase;
+
+    &.is-visible {
+      display: block;
+    }
+  }
+}

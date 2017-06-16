@@ -1,0 +1,32 @@
+.search-box {
+  margin: auto;
+
+  input {
+    background-color: $white;
+    border: none;
+    border-bottom: 2px solid rgba($black, .12);
+    // border-radius: 3px;
+    color: rgba($black, .8);
+    font-family: $font-primary;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 36px;
+    outline: none;
+    padding: 0 10px;
+    text-align: center;
+    transition: all .3s;
+    width: 300px;
+
+    &[type="text"]::-webkit-input-placeholder {
+      color: rgba($black, .24);
+      font-family: $font-primary;
+      font-weight: 400;
+      transition: all .3s;
+    }
+
+    &:hover,
+    &:focus {
+      border-bottom: 2px solid rgba($tomato, .56);
+    }
+  }
+}

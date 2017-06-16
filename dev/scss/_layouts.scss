@@ -1,0 +1,21 @@
+.l-pinned {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+$padding: 8px;
+
+@for $i from 1 through 8 {
+
+  @if ($i > 1) {
+    $num: $i - 1;
+    $padding: $padding + 8px;
+  }
+
+  .l-pad-top-#{$i} {
+    padding-top: $padding;
+  }
+}
