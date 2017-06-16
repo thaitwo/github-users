@@ -28,6 +28,7 @@
 .top-bar {
   height: 64px;
   margin: 0 40px;
+  text-align: center;
 }
 
 .logo {
@@ -43,11 +44,5 @@
   &:hover {
     color: rgba($white, .6);
   }
-}
-
-.container {
-  margin: auto;
-  text-align: center;
-  width: 960px;
 }
 

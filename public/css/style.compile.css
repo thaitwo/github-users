@@ -108,6 +108,11 @@ table {
 .l-pad-bottom-8 {
   padding-bottom: 64px; }
 
+.container {
+  margin: auto;
+  text-align: center;
+  width: 960px; }
+
 /* SEARCH BOX
 ===================================================== */
 .search-box {
@@ -145,17 +150,26 @@ input:-webkit-autofill:focus {
 .user-card {
   font-family: "Roboto", sans-serif;
   bottom: 0;
+  left: 0;
   overflow: auto;
   position: absolute;
   padding: 0 40px;
+  right: 0;
   top: 100px; }
   .user-card .user-info {
     border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     margin: 0 180px;
     padding-bottom: 40px; }
+    .user-card .user-info img {
+      border: 10px solid #FFFFFF;
+      border-radius: 300px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24);
+      height: 160px;
+      width: 160px; }
     .user-card .user-info .username {
       color: rgba(0, 0, 0, 0.8);
-      font-size: 32px; }
+      font-size: 32px;
+      padding-top: 20px; }
     .user-card .user-info .follower-title {
       color: rgba(0, 0, 0, 0.3);
       font-size: 18px; }
@@ -238,7 +252,8 @@ input:-webkit-autofill:focus {
 
 .top-bar {
   height: 64px;
-  margin: 0 40px; }
+  margin: 0 40px;
+  text-align: center; }
 
 .logo {
   color: #FFFFFF;
@@ -251,8 +266,3 @@ input:-webkit-autofill:focus {
   transition: all .3s; }
   .logo:hover {
     color: rgba(255, 255, 255, 0.6); }
-
-.container {
-  margin: auto;
-  text-align: center;
-  width: 960px; }

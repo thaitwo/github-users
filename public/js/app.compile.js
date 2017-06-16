@@ -90,14 +90,17 @@ var App = function () {
   function App() {
     _classCallCheck(this, App);
 
+    // REGISTER ELEMENTS
     this.$form = $('form');
     this.$searchInput = $('#input');
     this.$userCard = $('#card');
     this.$userInfoContainer = $('#user-info');
-    this.$followersContainer = $('#user-followers');
+    this.$followersContainer = $('#followers-container');
+    this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
-    this.username;
     this.followerCount;
+
+    // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
   }
 
@@ -107,21 +110,30 @@ var App = function () {
   _createClass(App, [{
     key: 'getSearchValue',
     value: function getSearchValue() {
+      var _this = this;
+
       var that = this;
 
       this.$searchInput.keypress(function (event) {
-        that.username = event.currentTarget.value; //username
+        // Get input value (username)
+        var username = event.currentTarget.value;
 
         if (event.which == 13) {
           event.preventDefault();
 
-          that.getUserData(that.username);
+          // Clear followers list
+          _this.$followersList.empty();
 
-          that.getFollowers(that.username);
+          // Make Ajax call to get user data
+          that.getUserData(username);
 
-          that.activateLoadButton(that.username);
+          // Make Ajax call to get user's follower list
+          that.getFollowers(username);
 
-          // Clearn input field
+          // Activate 'Load More' button
+          that.activateLoadButton(username);
+
+          // Clear input field
           that.$searchInput.val('');
         }
       });
@@ -148,14 +160,21 @@ var App = function () {
   }, {
     key: 'createUserCard',
     value: function createUserCard(data) {
-      // Set follower count
       this.followerCount = data.data.followers;
       var handle = data.data.login;
+      var imageLink = data.data.avatar_url;
+      var cardHTML = void 0;
+      console.log(data);
 
       // Render HTML for user card
-      var cardHTML = '\n        <div class="username">' + handle + '</div>\n        <div class="l-pad-top-4">\n          <h4 class="follower-title">Followers</h4>\n          <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n        </div>\n      ';
+      if (typeof handle === 'undefined') {
+        cardHTML = '<div>Sorry, that username does not exist.</div>';
+      } else {
+        cardHTML = '\n      <img src="' + imageLink + '">\n      <div class="username">' + handle + '</div>\n      <div class="l-pad-top-4">\n        <h4 class="follower-title">Followers</h4>\n        <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n      </div>\n      ';
+      }
 
       this.$userInfoContainer.empty();
+      this.$loadButton.removeClass('is-visible');
       this.$userInfoContainer.append(cardHTML);
     }
 
@@ -164,38 +183,34 @@ var App = function () {
   }, {
     key: 'getFollowers',
     value: function getFollowers(username) {
-      var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var _this2 = this;
+
+      var pageCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var loadCount = arguments[2];
 
       var that = this;
-      var counter = 0;
+      // let counter = 0;
 
       $.ajax({
-        url: 'https://api.github.com/users/' + username + '/followers?per_page=40&page=' + count,
+        url: 'https://api.github.com/users/' + username + '/followers?per_page=40&page=' + pageCount,
         dataType: 'jsonp',
         success: function success(data) {
-          counter = counter + data.data.length;
-          console.log('THIS COUNT', that.followerCount);
-          console.log('STORED COUNT', counter);
-          var storedUsername = username;
+          // counter = counter + data.data.length;
+          console.log(_this2.followerCount);
 
           // Render a list of all the followers
-          var listOfFollowers = that.createFollowersList(data);
-
-          // If new username is passed, empty followers container
-          if (storedUsername !== username) {
-            that.$followersContainer.empty();
-          }
+          var listOfFollowers = _this2.createFollowersList(data);
 
           // Append the list of followers into the followers container
-          that.$followersContainer.append(listOfFollowers);
+          _this2.$followersList.append(listOfFollowers);
 
-          // If user has more than 40 followers, insert 'Load More' button
-          if (that.followerCount > 40) {
-            that.$loadButton.addClass('is-visible');
+          // If user has more than 30 followers, insert 'Load More' button
+          if (_this2.followerCount > 40) {
+            _this2.$loadButton.addClass('is-visible');
           }
 
-          if (counter >= that.followerCount) {
-            console.log('button removed');
+          // Remove button if all followers are loaded
+          if (loadCount >= _this2.followerCount) {
             that.$loadButton.removeClass('is-visible');
           }
         }
@@ -225,12 +240,15 @@ var App = function () {
     value: function activateLoadButton(username) {
       var that = this;
       var count = 1;
+      var loadCount = 40; // Count for amount of followers loaded
 
+      // Click handler - load more followers on button click
       this.$loadButton.on('click', function (event) {
         event.preventDefault();
-        count = count + 1;
+        count += 1;
+        loadCount += 40;
 
-        that.getFollowers(username, count);
+        that.getFollowers(username, count, loadCount);
       });
     }
   }]);
