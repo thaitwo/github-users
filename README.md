@@ -3,14 +3,14 @@
 
 [![GitHubers](https://raw.githubusercontent.com/thaitwo/github-users/master/public/assets/githubers-screenshot.png)](https://thaitwo.github.io/github-users)
 
-###Demo
+### Demo
 
 Check out the live [**demo**](https://thaitwo.github.io/github-users)
 
 
 ## Technologies Used
 
-The following technologies were used to buid this application. No frameworks were required in the process.
+The following technologies were used to buid this application. No frameworks were required in the process due to the small scale and simplicity of this application.
 
 * [jQuery](https://jquery.com/)
 * [SCSS](http://sass-lang.com/)
@@ -20,8 +20,8 @@ The following technologies were used to buid this application. No frameworks wer
 
 
 
-## Development Setup
-In order to get this application running, you need to install the following development dependencies:
+## Development Installations
+In order to get this application running, you will need to install the following development dependencies:
 
 * babel-core
 * babel-loader
