@@ -12,6 +12,17 @@
   background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
 }
 
+.text-display {
+  font-family: $font-primary;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+.octocat {
+  width: 300px;
+}
+
 .canvas {
   background: $white;
   bottom: 40px;

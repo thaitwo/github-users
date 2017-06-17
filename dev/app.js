@@ -7,6 +7,7 @@ class App {
     // REGISTER ELEMENTS
     this.$form = $('form');
     this.$searchInput = $('#input');
+    this.$homeDisplay = $('#home-display');
     this.$userCard = $('#card');
     this.$userInfoContainer = $('#user-info');
     this.$followersContainer = $('#followers-container');
@@ -31,8 +32,12 @@ class App {
       if (event.which == 13) {
         event.preventDefault();
 
-        // Clear followers list
+        // Clear followers list & home display
         this.$followersList.empty();
+        this.$homeDisplay.empty();
+
+        // Add bottom border to 'user-info' container
+        this.$userInfoContainer.addClass('has-border-bottom');
 
         // Make Ajax call to get user data
         that.getUserData(username);

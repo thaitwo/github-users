@@ -12,9 +12,12 @@
   top: 100px;
 
   .user-info {
-    border-bottom: 1px solid rgba($black, .04);
     margin: 0 180px;
-    padding-bottom: 40px;
+    padding-bottom: 36px;
+
+    &.has-border-bottom {
+      border-bottom: 1px solid rgba($black, .04);
+    }
 
     img {
       border: 10px solid $white;

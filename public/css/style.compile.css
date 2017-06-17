@@ -157,9 +157,10 @@ input:-webkit-autofill:focus {
   right: 0;
   top: 100px; }
   .user-card .user-info {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     margin: 0 180px;
-    padding-bottom: 40px; }
+    padding-bottom: 36px; }
+    .user-card .user-info.has-border-bottom {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04); }
     .user-card .user-info img {
       border: 10px solid #FFFFFF;
       border-radius: 300px;
@@ -237,6 +238,15 @@ input:-webkit-autofill:focus {
 
 .background-sunset {
   background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%); }
+
+.text-display {
+  font-family: "Roboto", sans-serif;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 48px; }
+
+.octocat {
+  width: 300px; }
 
 .canvas {
   background: #FFFFFF;
