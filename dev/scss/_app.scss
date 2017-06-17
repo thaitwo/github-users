@@ -1,27 +1,5 @@
-.app-container {
-  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-}
-
 .background-sunset {
   background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
-}
-
-.text-display {
-  color: rgba($black, .8);
-  font-family: $font-primary;
-  font-size: 36px;
-  font-weight: 300;
-  margin-bottom: 48px;
-}
-
-.octocat {
-  width: 300px;
 }
 
 .canvas {
@@ -41,20 +19,32 @@
   height: 64px;
   margin: 0 40px;
   text-align: center;
+
+  .logo {
+    color: $white;
+    font-family: $font-secondary;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 64px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .3s;
+
+    &:hover {
+      color: rgba($white, .6);
+    }
+  }
 }
 
-.logo {
-  color: $white;
-  font-family: $font-secondary;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 64px;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all .3s;
+.text-display {
+  color: rgba($black, .8);
+  font-family: $font-primary;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
 
-  &:hover {
-    color: rgba($white, .6);
-  }
+.octocat {
+  width: 300px;
 }
 

@@ -14,9 +14,9 @@ The following technologies were used to buid this application. No frameworks wer
 
 * [jQuery](https://jquery.com/)
 * [SCSS](http://sass-lang.com/)
-* [Babel](https://babeljs.io/) - Required to compile ES6 into ES5
-* [Webpack](https://webpack.js.org/) - Required to compile JavaScript and SCSS
-* [Animate.css](https://daneden.github.io/animate.css/) - Used animations to enhance user experience
+* [Babel](https://babeljs.io/)
+* [Webpack](https://webpack.js.org/)
+* [Animate.css](https://daneden.github.io/animate.css/)
 
 
 

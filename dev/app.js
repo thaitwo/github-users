@@ -14,6 +14,7 @@ class App {
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
     this.followerCount;
+    this.loadAmount = 40; // Amount of followers to load each time
 
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
@@ -33,11 +34,11 @@ class App {
         event.preventDefault();
 
         // Clear followers list & home display
-        this.$followersList.empty();
-        this.$homeDisplay.empty();
+        that.$followersList.empty();
+        that.$homeDisplay.empty();
 
         // Add bottom border to 'user-info' container
-        this.$userInfoContainer.addClass('has-border-bottom');
+        that.$userInfoContainer.addClass('has-border-bottom');
 
         // Make Ajax call to get user data
         that.getUserData(username);
@@ -105,25 +106,23 @@ class App {
     // let counter = 0;
 
     $.ajax({
-      url: `https://api.github.com/users/${username}/followers?per_page=40&page=${pageCount}`,
+      url: `https://api.github.com/users/${username}/followers?per_page=${this.loadAmount}&page=${pageCount}`,
       dataType: 'jsonp',
       success: (data) => {
-        // counter = counter + data.data.length;
-        console.log(this.followerCount);
 
         // Render a list of all the followers
-        const listOfFollowers = this.createFollowersList(data);
+        const listOfFollowers = that.createFollowersList(data);
 
         // Append the list of followers into the followers container
-        this.$followersList.append(listOfFollowers);
+        that.$followersList.append(listOfFollowers);
 
         // If user has more than 30 followers, insert 'Load More' button
-        if (this.followerCount > 40) {
-          this.$loadButton.addClass('is-visible');
+        if (that.followerCount > that.loadAmount) {
+          that.$loadButton.addClass('is-visible');
         }
 
         // Remove button if all followers are loaded
-        if (loadCount >= this.followerCount) {
+        if (loadCount >= that.followerCount) {
           that.$loadButton.removeClass('is-visible');
         }
       }
@@ -144,7 +143,9 @@ class App {
       return `
       <li>
         <a href="${htmlLink}" target="_blank">
-          <img src="${imageLink}">
+          <div class="avatar-image">
+            <img src="${imageLink}">
+          </div>
           <span>${username}</span>
         </a>
       </li>
@@ -158,13 +159,13 @@ class App {
   activateLoadButton(username) {
     const that = this;
     let count = 1;
-    let loadCount = 40; // Count for amount of followers loaded
+    let loadCount = this.loadAmount; // Count for amount of followers loaded
 
     // Click handler - load more followers on button click
     this.$loadButton.on('click', (event) => {
       event.preventDefault();
       count += 1;
-      loadCount += 40;
+      loadCount += this.loadAmount;
 
       that.getFollowers(username, count, loadCount);
     })

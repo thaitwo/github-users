@@ -100,6 +100,7 @@ var App = function () {
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
     this.followerCount;
+    this.loadAmount = 40; // Amount of followers to load each time
 
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
@@ -111,8 +112,6 @@ var App = function () {
   _createClass(App, [{
     key: 'getSearchValue',
     value: function getSearchValue() {
-      var _this = this;
-
       var that = this;
 
       this.$searchInput.keypress(function (event) {
@@ -123,11 +122,11 @@ var App = function () {
           event.preventDefault();
 
           // Clear followers list & home display
-          _this.$followersList.empty();
-          _this.$homeDisplay.empty();
+          that.$followersList.empty();
+          that.$homeDisplay.empty();
 
           // Add bottom border to 'user-info' container
-          _this.$userInfoContainer.addClass('has-border-bottom');
+          that.$userInfoContainer.addClass('has-border-bottom');
 
           // Make Ajax call to get user data
           that.getUserData(username);
@@ -188,8 +187,6 @@ var App = function () {
   }, {
     key: 'getFollowers',
     value: function getFollowers(username) {
-      var _this2 = this;
-
       var pageCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var loadCount = arguments[2];
 
@@ -197,25 +194,23 @@ var App = function () {
       // let counter = 0;
 
       $.ajax({
-        url: 'https://api.github.com/users/' + username + '/followers?per_page=40&page=' + pageCount,
+        url: 'https://api.github.com/users/' + username + '/followers?per_page=' + this.loadAmount + '&page=' + pageCount,
         dataType: 'jsonp',
         success: function success(data) {
-          // counter = counter + data.data.length;
-          console.log(_this2.followerCount);
 
           // Render a list of all the followers
-          var listOfFollowers = _this2.createFollowersList(data);
+          var listOfFollowers = that.createFollowersList(data);
 
           // Append the list of followers into the followers container
-          _this2.$followersList.append(listOfFollowers);
+          that.$followersList.append(listOfFollowers);
 
           // If user has more than 30 followers, insert 'Load More' button
-          if (_this2.followerCount > 40) {
-            _this2.$loadButton.addClass('is-visible');
+          if (that.followerCount > that.loadAmount) {
+            that.$loadButton.addClass('is-visible');
           }
 
           // Remove button if all followers are loaded
-          if (loadCount >= _this2.followerCount) {
+          if (loadCount >= that.followerCount) {
             that.$loadButton.removeClass('is-visible');
           }
         }
@@ -234,7 +229,7 @@ var App = function () {
         var username = user.login;
 
         // Render HTML for list of followers
-        return '\n      <li>\n        <a href="' + htmlLink + '" target="_blank">\n          <img src="' + imageLink + '">\n          <span>' + username + '</span>\n        </a>\n      </li>\n      ';
+        return '\n      <li>\n        <a href="' + htmlLink + '" target="_blank">\n          <div class="avatar-image">\n            <img src="' + imageLink + '">\n          </div>\n          <span>' + username + '</span>\n        </a>\n      </li>\n      ';
       }).join('');
     }
 
@@ -243,15 +238,17 @@ var App = function () {
   }, {
     key: 'activateLoadButton',
     value: function activateLoadButton(username) {
+      var _this = this;
+
       var that = this;
       var count = 1;
-      var loadCount = 40; // Count for amount of followers loaded
+      var loadCount = this.loadAmount; // Count for amount of followers loaded
 
       // Click handler - load more followers on button click
       this.$loadButton.on('click', function (event) {
         event.preventDefault();
         count += 1;
-        loadCount += 40;
+        loadCount += _this.loadAmount;
 
         that.getFollowers(username, count, loadCount);
       });

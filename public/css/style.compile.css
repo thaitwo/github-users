@@ -169,7 +169,7 @@ input:-webkit-autofill:focus {
       transition: all .3s;
       width: 160px; }
       .user-card .user-info img:hover {
-        box-shadow: 0 0 16px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.24); }
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.24); }
     .user-card .user-info .username {
       color: rgba(0, 0, 0, 0.8);
       font-size: 32px;
@@ -183,31 +183,36 @@ input:-webkit-autofill:focus {
   .user-card ul.followers {
     margin-top: 20px; }
     .user-card ul.followers li {
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: rgba(0, 0, 0, 0.02);
       border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
       display: inline-block;
       font-size: 14px;
       height: 200px;
-      margin: 10px;
-      padding: 10px;
+      margin: 14px;
       transition: all .3s;
-      width: 180px; }
+      width: 200px; }
       .user-card ul.followers li:hover {
-        background-color: rgba(0, 0, 0, 0.01);
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
+        background-color: white;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.24);
         cursor: pointer; }
         .user-card ul.followers li:hover img {
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24); }
+      .user-card ul.followers li .avatar-image {
+        padding: 20px 0; }
       .user-card ul.followers li a {
         color: rgba(0, 0, 0, 0.8);
-        text-decoration: none; }
+        display: block;
+        height: 100%;
+        text-decoration: none;
+        width: 100%; }
         .user-card ul.followers li a img {
           border: 6px solid #FFFFFF;
           border-radius: 200px;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24);
           display: block;
           height: 100px;
-          margin: 20px auto;
+          margin: auto;
           transition: all .3s;
           width: 100px; }
   .user-card button.load-more {
@@ -230,27 +235,8 @@ input:-webkit-autofill:focus {
     .user-card button.load-more:hover {
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24); }
 
-.app-container {
-  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0; }
-
 .background-sunset {
   background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%); }
-
-.text-display {
-  color: rgba(0, 0, 0, 0.8);
-  font-family: "Roboto", sans-serif;
-  font-size: 36px;
-  font-weight: 300;
-  margin-bottom: 48px; }
-
-.octocat {
-  width: 300px; }
 
 .canvas {
   background: #FFFFFF;
@@ -268,15 +254,24 @@ input:-webkit-autofill:focus {
   height: 64px;
   margin: 0 40px;
   text-align: center; }
+  .top-bar .logo {
+    color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 64px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .3s; }
+    .top-bar .logo:hover {
+      color: rgba(255, 255, 255, 0.6); }
 
-.logo {
-  color: #FFFFFF;
-  font-family: "Montserrat", sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 64px;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all .3s; }
-  .logo:hover {
-    color: rgba(255, 255, 255, 0.6); }
+.text-display {
+  color: rgba(0, 0, 0, 0.8);
+  font-family: "Roboto", sans-serif;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 48px; }
+
+.octocat {
+  width: 300px; }
