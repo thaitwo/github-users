@@ -7,7 +7,6 @@
   input {
     background-color: rgba($black, .04);
     border: none;
-    // border: 1px solid rgba($black, .12);
     border-radius: 3px;
     color: rgba($black, .8);
     font-family: $font-primary;
@@ -30,7 +29,6 @@
     &:hover,
     &:focus {
       background-color: rgba($black, .02);
-      // border: 1px solid rgba($black, .12);
       box-shadow: inset 0 1px 4px rgba(0,0,0,0.12);
     }
   }

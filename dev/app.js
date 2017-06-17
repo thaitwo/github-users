@@ -75,15 +75,15 @@ class App {
     this.followerCount = data.data.followers;
     const handle = data.data.login;
     const imageLink = data.data.avatar_url;
+    const htmlLink = data.data.html_url;
     let cardHTML;
-    console.log(data);
 
     // Render HTML for user card
     if (typeof handle === 'undefined') {
       cardHTML = `<div>Sorry, that username does not exist.</div>`
     } else {
       cardHTML = `
-      <img src="${imageLink}">
+      <a href="${htmlLink}" target="_blank"><img src="${imageLink}"></a>
       <div class="username">${handle}</div>
       <div class="l-pad-top-4">
         <h4 class="follower-title">Followers</h4>

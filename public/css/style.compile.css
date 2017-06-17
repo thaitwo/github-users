@@ -166,7 +166,10 @@ input:-webkit-autofill:focus {
       border-radius: 300px;
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24);
       height: 160px;
+      transition: all .3s;
       width: 160px; }
+      .user-card .user-info img:hover {
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.24); }
     .user-card .user-info .username {
       color: rgba(0, 0, 0, 0.8);
       font-size: 32px;
@@ -240,6 +243,7 @@ input:-webkit-autofill:focus {
   background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%); }
 
 .text-display {
+  color: rgba(0, 0, 0, 0.8);
   font-family: "Roboto", sans-serif;
   font-size: 36px;
   font-weight: 300;
