@@ -4,7 +4,7 @@
   "description": "Allows users to search GitHub usernames",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack --watch"
   },
   "repository": {
     "type": "git",

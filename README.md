@@ -10,7 +10,7 @@ Check out the live [**demo**](https://thaitwo.github.io/github-users)
 
 ## Technologies Used
 
-The following technologies were used to buid this application. No frameworks were required in the process due to the small scale and simplicity of this application.
+The following technologies were used to buid this application.
 
 * [jQuery](https://jquery.com/)
 * [SCSS](http://sass-lang.com/)
@@ -18,7 +18,9 @@ The following technologies were used to buid this application. No frameworks wer
 * [Webpack](https://webpack.js.org/)
 * [Animate.css](https://daneden.github.io/animate.css/)
 
+## API Reference
 
+The GitHub API was used for this application. To learn more about the GitHub API [click here](https://developer.github.com/v3/)
 
 ## Development Installations
 In order to get this application running, you will need to install the following development dependencies:
@@ -39,10 +41,6 @@ Feel free to copy and paste the code below into your command line to install the
 npm install webpack babel-core babel-loader babel-preset-es2015 css-loader node-sass sass-loader style-loader extract-text-webpack-plugin --save-dev
 ```
 
-## API Reference
-
-GitHub API was used for this application. To learn more about the GitHub API [click here](https://developer.github.com/v3/)
-
 ## Run App in Local Environment
 
 To run the app locally, simply go to your root directory via your desktop and double click on the **index.html** file. This should open a window on your browser displaying the app webpage.
@@ -50,7 +48,7 @@ To run the app locally, simply go to your root directory via your desktop and do
 To compile the changes made in development, go to the root directory for this repos in the command line and type in the following:
 
 ```
-webpack --watch
+npm start
 ```
 
 ## Deployment
