@@ -18,8 +18,8 @@ class App {
 
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
-
   }
+
 
 
   // GET INPUT VALUE (USERNAME) ON ENTER
@@ -54,6 +54,7 @@ class App {
       }
     })
   }
+
 
 
   // FETCH USER DATA FROM API AND CREATE USER CARD
@@ -94,6 +95,7 @@ class App {
       `
     }
 
+    // For each new query, clear user info container and 'load more' button, then add new user info into container
     this.$userInfoContainer.empty();
     this.$loadButton.removeClass('is-visible');
     this.$userInfoContainer.append(cardHTML);
@@ -104,7 +106,6 @@ class App {
   // FETCH LIST OF FOLLOWERS --> RENDER HTML OF LIST OF FOLLOWERS --> INSERT INTO DOM
   getFollowers(username, pageCount = 1, loadCount) {
     const that = this;
-    // let counter = 0;
 
     $.ajax({
       url: `https://api.github.com/users/${username}/followers?per_page=${this.loadAmount}&page=${pageCount}`,
@@ -168,6 +169,7 @@ class App {
       count += 1;
       loadCount += this.loadAmount;
 
+      // Fetch more followers
       that.getFollowers(username, count, loadCount);
     })
   }
