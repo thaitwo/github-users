@@ -1,7 +1,7 @@
 module.exports = {
   'Successful search test' : function (client) {
     client
-      .url('file:///Users/tmtu/Repos/github-users/index.html')
+      .url('https://thaitwo.github.io/github-users/')
       .setValue('input[type=text]', 'tobiasbueschel')
       .keys(client.Keys.ENTER)
       .assert.attributeContains('#user-info a', 'href', 'https://github.com')
@@ -10,7 +10,7 @@ module.exports = {
   },
   'Fail search test' : function (client) {
     client
-      .url('file:///Users/tmtu/Repos/github-users/index.html')
+      .url('https://thaitwo.github.io/github-users/')
       .setValue('input[type=text]', 'asdkfaskdhaskrekadsf')
       .keys(client.Keys.ENTER)
       .pause(2000)
