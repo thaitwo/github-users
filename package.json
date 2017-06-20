@@ -4,7 +4,10 @@
   "description": "Allows users to search GitHub usernames",
   "main": "app.js",
   "scripts": {
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "test-search-success": "nightwatch --test tests/search.js --testcase 'Successful search test'",
+    "test-search-fail": "nightwatch --test tests/search.js --testcase 'Fail search test'",
+    "test-load-more": "nightwatch tests/load-more.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,7 @@
     "babel-preset-es2015": "^6.24.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.2",
+    "nightwatch": "^0.9.16",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",

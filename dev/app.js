@@ -77,11 +77,12 @@ class App {
     const handle = data.data.login;
     const imageLink = data.data.avatar_url;
     const htmlLink = data.data.html_url;
+    const notFound = data.data.message;
     let cardHTML;
 
     // Render HTML for user card
-    if (typeof handle === 'undefined') {
-      cardHTML = `<div>Sorry, that username does not exist.</div>`
+    if (notFound) {
+      cardHTML = `<div id="search-fail">Sorry, that username does not exist.</div>`
     } else {
       cardHTML = `
       <a href="${htmlLink}" target="_blank"><img src="${imageLink}"></a>

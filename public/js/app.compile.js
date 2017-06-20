@@ -168,11 +168,12 @@ var App = function () {
       var handle = data.data.login;
       var imageLink = data.data.avatar_url;
       var htmlLink = data.data.html_url;
+      var notFound = data.data.message;
       var cardHTML = void 0;
 
       // Render HTML for user card
-      if (typeof handle === 'undefined') {
-        cardHTML = '<div>Sorry, that username does not exist.</div>';
+      if (notFound) {
+        cardHTML = '<div id="search-fail">Sorry, that username does not exist.</div>';
       } else {
         cardHTML = '\n      <a href="' + htmlLink + '" target="_blank"><img src="' + imageLink + '"></a>\n      <div class="username">' + handle + '</div>\n      <div class="l-pad-top-4">\n        <h4 class="follower-title">Followers</h4>\n        <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n      </div>\n      ';
       }
