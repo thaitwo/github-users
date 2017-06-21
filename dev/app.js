@@ -24,7 +24,6 @@ class App {
 
   // GET INPUT VALUE (USERNAME) ON ENTER
   getSearchValue() {
-    const that = this;
 
     this.$searchInput.keypress((event) => {
       // Get input value (username)
@@ -34,23 +33,23 @@ class App {
         event.preventDefault();
 
         // Clear followers list & home display
-        that.$followersList.empty();
-        that.$homeDisplay.empty();
+        this.$followersList.empty();
+        this.$homeDisplay.empty();
 
         // Add bottom border to 'user-info' container
-        that.$userInfoContainer.addClass('has-border-bottom');
+        this.$userInfoContainer.addClass('has-border-bottom');
 
         // Make Ajax call to get user data
-        that.getUserData(username);
+        this.getUserData(username);
 
         // Make Ajax call to get user's follower list
-        that.getFollowers(username);
+        this.getFollowers(username);
 
         // Activate 'Load More' button
-        that.activateLoadButton(username);
+        this.activateLoadButton(username);
 
         // Clear input field
-        that.$searchInput.val('');
+        this.$searchInput.val('');
       }
     })
   }
@@ -59,14 +58,11 @@ class App {
 
   // FETCH USER DATA FROM API AND CREATE USER CARD
   getUserData(username) {
-    const that = this;
 
     $.ajax({
       url: `https://api.github.com/users/${username}`,
       dataType: 'jsonp',
-      success: (data) => {
-        that.createUserCard(data);
-      }
+      success: this.createUserCard.bind(this)
     })
   }
 
@@ -105,7 +101,6 @@ class App {
 
   // FETCH LIST OF FOLLOWERS --> RENDER HTML OF LIST OF FOLLOWERS --> INSERT INTO DOM
   getFollowers(username, pageCount = 1, loadCount) {
-    const that = this;
 
     $.ajax({
       url: `https://api.github.com/users/${username}/followers?per_page=${this.loadAmount}&page=${pageCount}`,
@@ -113,19 +108,19 @@ class App {
       success: (data) => {
 
         // Render a list of all the followers
-        const listOfFollowers = that.createFollowersList(data);
+        const listOfFollowers = this.createFollowersList(data);
 
         // Append the list of followers into the followers container
-        that.$followersList.append(listOfFollowers);
+        this.$followersList.append(listOfFollowers);
 
         // If user has more than 30 followers, insert 'Load More' button
-        if (that.followerCount > that.loadAmount) {
-          that.$loadButton.addClass('is-visible');
+        if (this.followerCount > this.loadAmount) {
+          this.$loadButton.addClass('is-visible');
         }
 
         // Remove button if all followers are loaded
-        if (loadCount >= that.followerCount) {
-          that.$loadButton.removeClass('is-visible');
+        if (loadCount >= this.followerCount) {
+          this.$loadButton.removeClass('is-visible');
         }
       }
     })
@@ -159,7 +154,6 @@ class App {
 
   // LOAD MORE FOLLOWERS WHEN 'LOAD MORE' BUTTON IS CLICKED
   activateLoadButton(username) {
-    const that = this;
     let count = 1;
     let loadCount = this.loadAmount; // Count for amount of followers loaded
 
@@ -170,7 +164,7 @@ class App {
       loadCount += this.loadAmount;
 
       // Fetch more followers
-      that.getFollowers(username, count, loadCount);
+      this.getFollowers(username, count, loadCount);
     })
   }
 }

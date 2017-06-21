@@ -1,7 +1,7 @@
 module.exports = {
-  'Successful search test' : function (client) {
+  'Successful search test' : (client) => {
     client
-      .url('https://thaitwo.github.io/github-users/')
+      .url('file:///Users/tmtu/Repos/github-users/index.html')
       .setValue('input[type=text]', 'tobiasbueschel')
       .keys(client.Keys.ENTER)
       .assert.attributeContains('#user-info a', 'href', 'https://github.com')

@@ -1,7 +1,7 @@
 module.exports = {
-  'Load more test' : function (client) {
+  'Load more test' : (client) => {
     client
-      .url('https://thaitwo.github.io/github-users/')
+      .url('file:///Users/tmtu/Repos/github-users/index.html')
       .setValue('input[type=text]', 'tobiasbueschel')
       .keys(client.Keys.ENTER)
       .click('.load-more')

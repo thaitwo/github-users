@@ -1,7 +1,7 @@
 module.exports = {
-  'App test' : function (client) {
+  'App test' : (client) => {
     client
-      .url('https://thaitwo.github.io/github-users/')
+      .url('file:///Users/tmtu/Repos/github-users/index.html')
       .pause(2000)
       .setValue('input[type=text]', 'asdfasdgsagfdsgad')
       .pause(2000)

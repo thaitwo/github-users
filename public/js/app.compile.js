@@ -112,7 +112,7 @@ var App = function () {
   _createClass(App, [{
     key: 'getSearchValue',
     value: function getSearchValue() {
-      var that = this;
+      var _this = this;
 
       this.$searchInput.keypress(function (event) {
         // Get input value (username)
@@ -122,23 +122,23 @@ var App = function () {
           event.preventDefault();
 
           // Clear followers list & home display
-          that.$followersList.empty();
-          that.$homeDisplay.empty();
+          _this.$followersList.empty();
+          _this.$homeDisplay.empty();
 
           // Add bottom border to 'user-info' container
-          that.$userInfoContainer.addClass('has-border-bottom');
+          _this.$userInfoContainer.addClass('has-border-bottom');
 
           // Make Ajax call to get user data
-          that.getUserData(username);
+          _this.getUserData(username);
 
           // Make Ajax call to get user's follower list
-          that.getFollowers(username);
+          _this.getFollowers(username);
 
           // Activate 'Load More' button
-          that.activateLoadButton(username);
+          _this.activateLoadButton(username);
 
           // Clear input field
-          that.$searchInput.val('');
+          _this.$searchInput.val('');
         }
       });
     }
@@ -148,14 +148,11 @@ var App = function () {
   }, {
     key: 'getUserData',
     value: function getUserData(username) {
-      var that = this;
 
       $.ajax({
         url: 'https://api.github.com/users/' + username,
         dataType: 'jsonp',
-        success: function success(data) {
-          that.createUserCard(data);
-        }
+        success: this.createUserCard.bind(this)
       });
     }
 
@@ -178,6 +175,7 @@ var App = function () {
         cardHTML = '\n      <a href="' + htmlLink + '" target="_blank"><img src="' + imageLink + '"></a>\n      <div class="username">' + handle + '</div>\n      <div class="l-pad-top-4">\n        <h4 class="follower-title">Followers</h4>\n        <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n      </div>\n      ';
       }
 
+      // For each new query, clear user info container and 'load more' button, then add new user info into container
       this.$userInfoContainer.empty();
       this.$loadButton.removeClass('is-visible');
       this.$userInfoContainer.append(cardHTML);
@@ -188,11 +186,11 @@ var App = function () {
   }, {
     key: 'getFollowers',
     value: function getFollowers(username) {
+      var _this2 = this;
+
       var pageCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var loadCount = arguments[2];
 
-      var that = this;
-      // let counter = 0;
 
       $.ajax({
         url: 'https://api.github.com/users/' + username + '/followers?per_page=' + this.loadAmount + '&page=' + pageCount,
@@ -200,19 +198,19 @@ var App = function () {
         success: function success(data) {
 
           // Render a list of all the followers
-          var listOfFollowers = that.createFollowersList(data);
+          var listOfFollowers = _this2.createFollowersList(data);
 
           // Append the list of followers into the followers container
-          that.$followersList.append(listOfFollowers);
+          _this2.$followersList.append(listOfFollowers);
 
           // If user has more than 30 followers, insert 'Load More' button
-          if (that.followerCount > that.loadAmount) {
-            that.$loadButton.addClass('is-visible');
+          if (_this2.followerCount > _this2.loadAmount) {
+            _this2.$loadButton.addClass('is-visible');
           }
 
           // Remove button if all followers are loaded
-          if (loadCount >= that.followerCount) {
-            that.$loadButton.removeClass('is-visible');
+          if (loadCount >= _this2.followerCount) {
+            _this2.$loadButton.removeClass('is-visible');
           }
         }
       });
@@ -239,9 +237,8 @@ var App = function () {
   }, {
     key: 'activateLoadButton',
     value: function activateLoadButton(username) {
-      var _this = this;
+      var _this3 = this;
 
-      var that = this;
       var count = 1;
       var loadCount = this.loadAmount; // Count for amount of followers loaded
 
@@ -249,9 +246,10 @@ var App = function () {
       this.$loadButton.on('click', function (event) {
         event.preventDefault();
         count += 1;
-        loadCount += _this.loadAmount;
+        loadCount += _this3.loadAmount;
 
-        that.getFollowers(username, count, loadCount);
+        // Fetch more followers
+        _this3.getFollowers(username, count, loadCount);
       });
     }
   }]);
