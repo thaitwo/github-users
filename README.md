@@ -40,21 +40,22 @@ Feel free to copy and paste the code below into your command line to install the
 ```
 npm install webpack babel-core babel-loader babel-preset-es2015 css-loader node-sass sass-loader style-loader extract-text-webpack-plugin --save-dev
 ```
-To run tests, you can install [Nightwatch](http://nightwatchjs.org/)
-
-```
-npm install nightwatch --save-dev
-```
 
 ## Run App in Local Environment
 
-To run the app locally, simply go to your root directory via your desktop and double click on the **index.html** file. This should open a window on your browser displaying the app webpage.
+To run the app locally, simply go to your root directory via your desktop and double click on the `index.html` file. This should open a window on your browser displaying the app webpage.
 
 To compile the changes made in development, go to the root directory for this repository in the command line and type in the following:
 
-```
-npm start
-```
+`npm start`
+
+## Testing
+> Testing will use Selenium to open a new browser to run automated front-end tests
+
+To run testing, you can install [Nightwatch](http://nightwatchjs.org/)
+
+1. `npm install nightwatch --save-dev -g`
+2. `npm run test`
 
 ## Deployment
 **This application was deployed using GitHub.**
