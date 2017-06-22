@@ -47,7 +47,9 @@ To run the app locally, simply go to your root directory via your desktop and do
 
 To compile the changes made in development, go to the root directory for this repository in the command line and type in the following:
 
-`npm start`
+```
+webpack --watch
+```
 
 ## Testing
 > Testing will use Selenium to open a new browser to run automated front-end tests
