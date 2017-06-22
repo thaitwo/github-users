@@ -100,19 +100,58 @@ var App = function () {
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
     this.followerCount;
-    this.loadAmount = 40; // Amount of followers to load each time
+
+    // Amount of followers to load each time
+    this.loadAmount = 40;
+
+    // NAVIGO ROUTING
+    this.root = null;
+    this.useHash = true;
+    this.router = new Navigo(this.root, this.useHash);
+
+    this.activateRouter();
 
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
   }
 
-  // GET INPUT VALUE (USERNAME) ON ENTER
+  // ROUTE HANDLER
 
 
   _createClass(App, [{
+    key: 'activateRouter',
+    value: function activateRouter() {
+      var _this = this;
+
+      // Route handler that executes callback function when route matches format of '/user/:id'
+      this.router.on('username=:id', function (params, query) {
+
+        var username = params.id;
+
+        // Clear followers list & home display
+        _this.$followersList.empty();
+        _this.$homeDisplay.empty();
+
+        // Add bottom border to 'user-info' container
+        _this.$userInfoContainer.addClass('has-border-bottom');
+
+        // Make Ajax call to get user data
+        _this.getUserData(username);
+
+        // Make Ajax call to get user's follower list
+        _this.getFollowers(username);
+
+        // Activate 'Load More' button
+        _this.activateLoadButton(username);
+      }).resolve();
+    }
+
+    // GET INPUT VALUE (USERNAME) ON ENTER
+
+  }, {
     key: 'getSearchValue',
     value: function getSearchValue() {
-      var _this = this;
+      var _this2 = this;
 
       this.$searchInput.keypress(function (event) {
         // Get input value (username)
@@ -121,24 +160,11 @@ var App = function () {
         if (event.which == 13) {
           event.preventDefault();
 
-          // Clear followers list & home display
-          _this.$followersList.empty();
-          _this.$homeDisplay.empty();
-
-          // Add bottom border to 'user-info' container
-          _this.$userInfoContainer.addClass('has-border-bottom');
-
-          // Make Ajax call to get user data
-          _this.getUserData(username);
-
-          // Make Ajax call to get user's follower list
-          _this.getFollowers(username);
-
-          // Activate 'Load More' button
-          _this.activateLoadButton(username);
+          // Add routing to URL
+          _this2.router.navigate('username=' + username);
 
           // Clear input field
-          _this.$searchInput.val('');
+          _this2.$searchInput.val('');
         }
       });
     }
@@ -186,7 +212,7 @@ var App = function () {
   }, {
     key: 'getFollowers',
     value: function getFollowers(username) {
-      var _this2 = this;
+      var _this3 = this;
 
       var pageCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var loadCount = arguments[2];
@@ -198,19 +224,19 @@ var App = function () {
         success: function success(data) {
 
           // Render a list of all the followers
-          var listOfFollowers = _this2.createFollowersList(data);
+          var listOfFollowers = _this3.createFollowersList(data);
 
           // Append the list of followers into the followers container
-          _this2.$followersList.append(listOfFollowers);
+          _this3.$followersList.append(listOfFollowers);
 
           // If user has more than 30 followers, insert 'Load More' button
-          if (_this2.followerCount > _this2.loadAmount) {
-            _this2.$loadButton.addClass('is-visible');
+          if (_this3.followerCount > _this3.loadAmount) {
+            _this3.$loadButton.addClass('is-visible');
           }
 
           // Remove button if all followers are loaded
-          if (loadCount >= _this2.followerCount) {
-            _this2.$loadButton.removeClass('is-visible');
+          if (loadCount >= _this3.followerCount) {
+            _this3.$loadButton.removeClass('is-visible');
           }
         }
       });
@@ -237,7 +263,7 @@ var App = function () {
   }, {
     key: 'activateLoadButton',
     value: function activateLoadButton(username) {
-      var _this3 = this;
+      var _this4 = this;
 
       var count = 1;
       var loadCount = this.loadAmount; // Count for amount of followers loaded
@@ -246,10 +272,10 @@ var App = function () {
       this.$loadButton.on('click', function (event) {
         event.preventDefault();
         count += 1;
-        loadCount += _this3.loadAmount;
+        loadCount += _this4.loadAmount;
 
         // Fetch more followers
-        _this3.getFollowers(username, count, loadCount);
+        _this4.getFollowers(username, count, loadCount);
       });
     }
   }]);

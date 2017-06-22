@@ -30,5 +30,8 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1"
+  },
+  "dependencies": {
+    "navigo": "^5.2.0"
   }
 }

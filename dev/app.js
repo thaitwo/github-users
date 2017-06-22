@@ -14,10 +14,48 @@ class App {
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
     this.followerCount;
-    this.loadAmount = 40; // Amount of followers to load each time
+
+    // Amount of followers to load each time
+    this.loadAmount = 40;
+
+    // NAVIGO ROUTING
+    this.root = null;
+    this.useHash = true;
+    this.router = new Navigo(this.root, this.useHash);
+
+    this.activateRouter();
 
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
+  }
+
+
+
+  // ROUTE HANDLER
+  activateRouter() {
+    // Route handler that executes callback function when route matches format of '/user/:id'
+    this.router.on('username=:id', (params, query) => {
+
+      const username = params.id;
+
+
+      // Clear followers list & home display
+      this.$followersList.empty();
+      this.$homeDisplay.empty();
+
+      // Add bottom border to 'user-info' container
+      this.$userInfoContainer.addClass('has-border-bottom');
+
+      // Make Ajax call to get user data
+      this.getUserData(username);
+
+      // Make Ajax call to get user's follower list
+      this.getFollowers(username);
+
+      // Activate 'Load More' button
+      this.activateLoadButton(username);
+    })
+    .resolve();
   }
 
 
@@ -32,21 +70,8 @@ class App {
       if (event.which == 13) {
         event.preventDefault();
 
-        // Clear followers list & home display
-        this.$followersList.empty();
-        this.$homeDisplay.empty();
-
-        // Add bottom border to 'user-info' container
-        this.$userInfoContainer.addClass('has-border-bottom');
-
-        // Make Ajax call to get user data
-        this.getUserData(username);
-
-        // Make Ajax call to get user's follower list
-        this.getFollowers(username);
-
-        // Activate 'Load More' button
-        this.activateLoadButton(username);
+        // Add routing to URL
+        this.router.navigate(`username=${username}`);
 
         // Clear input field
         this.$searchInput.val('');
