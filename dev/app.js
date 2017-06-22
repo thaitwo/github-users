@@ -126,7 +126,6 @@ class App {
   // RENDER HTML OF USER INFO --> INSERT INTO DOM
   createUserCard(data) {
     this.followerCount = data.data.followers;
-    console.log(this.followerCount);
     const handle = data.data.login;
     const imageLink = data.data.avatar_url;
     const htmlLink = data.data.html_url;

@@ -740,7 +740,6 @@ var App = function () {
     key: 'createUserCard',
     value: function createUserCard(data) {
       this.followerCount = data.data.followers;
-      console.log(this.followerCount);
       var handle = data.data.login;
       var imageLink = data.data.avatar_url;
       var htmlLink = data.data.html_url;
