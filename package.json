@@ -4,6 +4,7 @@
   "description": "Allows users to search GitHub usernames",
   "main": "app.js",
   "scripts": {
+    "start": "node server.js",
     "test": "nightwatch tests/test-app.js",
     "test-search-success": "nightwatch --test tests/search.js --testcase 'Successful search test'",
     "test-search-fail": "nightwatch --test tests/search.js --testcase 'Fail search test'",

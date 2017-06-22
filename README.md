@@ -16,14 +16,24 @@ The following technologies were used to build this application.
 * [SCSS](http://sass-lang.com/)
 * [Babel](https://babeljs.io/)
 * [Webpack](https://webpack.js.org/)
+* [Express](https://expressjs.com/)
+* [Navigo](https://github.com/user/krasimir/navigo)
 * [Animate.css](https://daneden.github.io/animate.css/)
 
 ## API Reference
 
 The GitHub API was used for this application. To learn more about the GitHub API [click here](https://developer.github.com/v3/)
 
-## Development Installations
-In order to get this application running and compile changes, you will need to install the following development dependencies:
+## Installations
+
+In order to get this application running and compile changes, you will need to have the following npm packages installed:
+
+#### Dependencies
+
+* express
+* navigo
+
+#### Development Dependencies
 
 * babel-core
 * babel-loader
@@ -35,7 +45,18 @@ In order to get this application running and compile changes, you will need to i
 * style-loader
 * webpack
 
-Feel free to copy and paste the code below into your command line to install the dependencies.
+
+To install all packages, go to the root folder in your command line and run:
+
+```
+npm install
+```
+Install just the dependencies:
+
+```
+npm install express navigo --save
+```
+Install the dev dependencies:
 
 ```
 npm install webpack babel-core babel-loader babel-preset-es2015 css-loader node-sass sass-loader style-loader extract-text-webpack-plugin --save-dev
@@ -43,9 +64,17 @@ npm install webpack babel-core babel-loader babel-preset-es2015 css-loader node-
 
 ## Run App in Local Environment
 
-To run the app locally, simply go to your root directory via your desktop and double click on the `index.html` file. This should open a window on your browser displaying the app webpage.
+To run the app locally, go to the root folder in the command line and run:
 
-To compile the changes made in development, go to the root directory for this repository in the command line and type in the following:
+```
+npm start
+```
+
+Then open a browser and type `localhost:8000` in the URL bar.
+
+#### Compile Code
+
+To compile the changes made in development, go to the root directory for this repository in the command line and run:
 
 ```
 webpack --watch
