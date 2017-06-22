@@ -23,7 +23,6 @@ class App {
     // NAVIGO ROUTING
     this.root = null;
     this.useHash = true;
-
     this.router = new Navigo(this.root, this.useHash);
 
     this.activateRouter();
@@ -31,6 +30,7 @@ class App {
     // ACTIVATE SEARCH FUNCTION
     this.getSearchValue();
   }
+
 
 
   // ROUTE HANDLER
@@ -125,6 +125,7 @@ class App {
 
   // RENDER HTML OF USER INFO --> INSERT INTO DOM
   createUserCard(data) {
+    console.log(data);
     this.followerCount = data.data.followers;
     const handle = data.data.login;
     const imageLink = data.data.avatar_url;

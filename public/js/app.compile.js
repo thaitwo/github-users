@@ -629,7 +629,6 @@ var App = function () {
     // NAVIGO ROUTING
     this.root = null;
     this.useHash = true;
-
     this.router = new _navigo2.default(this.root, this.useHash);
 
     this.activateRouter();
@@ -739,6 +738,7 @@ var App = function () {
   }, {
     key: 'createUserCard',
     value: function createUserCard(data) {
+      console.log(data);
       this.followerCount = data.data.followers;
       var handle = data.data.login;
       var imageLink = data.data.avatar_url;

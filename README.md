@@ -16,7 +16,6 @@ The following technologies were used to build this application.
 * [SCSS](http://sass-lang.com/)
 * [Babel](https://babeljs.io/)
 * [Webpack](https://webpack.js.org/)
-* [Express](https://expressjs.com/)
 * [Navigo](https://github.com/user/krasimir/navigo)
 * [Animate.css](https://daneden.github.io/animate.css/)
 
@@ -30,7 +29,6 @@ In order to get this application running and compile changes, you will need to h
 
 #### Dependencies
 
-* express
 * navigo
 
 #### Development Dependencies
@@ -54,7 +52,7 @@ npm install
 Install just the dependencies:
 
 ```
-npm install express navigo --save
+npm install navigo --save
 ```
 Install the dev dependencies:
 
@@ -67,10 +65,8 @@ npm install webpack babel-core babel-loader babel-preset-es2015 css-loader node-
 To run the app locally, go to the root folder in the command line and run:
 
 ```
-npm start
+python -m SimpleHTTPServer
 ```
-
-Then open a browser and type `localhost:8000` in the URL bar.
 
 #### Compile Code
 
