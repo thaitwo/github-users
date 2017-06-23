@@ -63,7 +63,7 @@ class App {
   // ROUTE HANDLER
   activateRouter() {
     // Route handler that executes callback function when route matches format of '/user/:id'
-    this.router.on('username=:id', (params, query) => {
+    this.router.on('username/:id', (params, query) => {
 
       const username = params.id;
 
@@ -100,7 +100,7 @@ class App {
         event.preventDefault();
 
         // Add routing to URL
-        this.router.navigate(`username=${username}`);
+        this.router.navigate(`username/${username}`);
 
 
         // Clear input field
@@ -125,7 +125,6 @@ class App {
 
   // RENDER HTML OF USER INFO --> INSERT INTO DOM
   createUserCard(data) {
-    console.log(data);
     this.followerCount = data.data.followers;
     const handle = data.data.login;
     const imageLink = data.data.avatar_url;

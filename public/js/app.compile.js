@@ -675,7 +675,7 @@ var App = function () {
       var _this2 = this;
 
       // Route handler that executes callback function when route matches format of '/user/:id'
-      this.router.on('username=:id', function (params, query) {
+      this.router.on('username/:id', function (params, query) {
 
         var username = params.id;
 
@@ -712,7 +712,7 @@ var App = function () {
           event.preventDefault();
 
           // Add routing to URL
-          _this3.router.navigate('username=' + username);
+          _this3.router.navigate('username/' + username);
 
           // Clear input field
           _this3.$searchInput.val('');
@@ -738,7 +738,6 @@ var App = function () {
   }, {
     key: 'createUserCard',
     value: function createUserCard(data) {
-      console.log(data);
       this.followerCount = data.data.followers;
       var handle = data.data.login;
       var imageLink = data.data.avatar_url;
