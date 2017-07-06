@@ -1,7 +1,7 @@
 # GitHubers
 > An application that allows users to search for GitHub users by username
 
-[![GitHubers](https://raw.githubusercontent.com/thaitwo/github-users/master/public/assets/githubers-screenshot.png)](https://thaitwo.github.io/github-users)
+[![GitHubers](https://raw.githubusercontent.com/thaitwo/github-users/master/public/assets/githubers-shot.png)](https://thaitwo.github.io/github-users)
 
 ### Demo
 

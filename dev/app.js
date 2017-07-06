@@ -5,7 +5,6 @@ import Navigo from 'navigo';
 class App {
   constructor() {
     // REGISTER ELEMENTS
-    this.followerCount;
     this.$form = $('form');
     this.$searchInput = $('#input');
     this.$homeDisplay = $('#home-display');
@@ -14,10 +13,11 @@ class App {
     this.$followersContainer = $('#followers-container');
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
+
+    // SET FOLLOWER COUNT
     this.followerCount;
 
-
-    // Amount of followers to load each time
+    // Amount of followers to load for each request
     this.loadAmount = 40;
 
     // NAVIGO ROUTING
@@ -25,6 +25,7 @@ class App {
     this.useHash = true;
     this.router = new Navigo(this.root, this.useHash);
 
+    // LISTENS FOR CHANGES IN THE ROUTE (URL)
     this.activateRouter();
 
     // ACTIVATE SEARCH FUNCTION
@@ -35,8 +36,8 @@ class App {
 
   // ROUTE HANDLER
   activateRouter() {
-    // Route handler that executes callback function when route matches format of '/user/:id'
-    this.router.on('user/:id', (params, query) => {
+    // Route handler that executes callback function when route matches format of '/username/:id'
+    this.router.on('username/:id', (params) => {
       const username = params.id;
 
       // Clear followers list & home display
@@ -50,36 +51,7 @@ class App {
       this.getUserData(username);
 
       // Make Ajax call to get user's follower list
-      this.getFollowers(username);
-
-      // Activate 'Load More' button
-      this.activateLoadButton(username);
-    })
-    .resolve();
-  }
-
-
-
-  // ROUTE HANDLER
-  activateRouter() {
-    // Route handler that executes callback function when route matches format of '/user/:id'
-    this.router.on('username/:id', (params, query) => {
-
-      const username = params.id;
-
-
-      // Clear followers list & home display
-      this.$followersList.empty();
-      this.$homeDisplay.empty();
-
-      // Add bottom border to 'user-info' container
-      this.$userInfoContainer.addClass('has-border-bottom');
-
-      // Make Ajax call to get user data
-      this.getUserData(username);
-
-      // Make Ajax call to get user's follower list
-      this.getFollowers(username);
+      this.getFollowersData(username);
 
       // Activate 'Load More' button
       this.activateLoadButton(username);
@@ -96,12 +68,12 @@ class App {
       // Get input value (username)
       const username = event.currentTarget.value;
 
+      // Generate new URL when 'Enter' key is pressed
       if (event.which == 13) {
         event.preventDefault();
 
         // Add routing to URL
         this.router.navigate(`username/${username}`);
-
 
         // Clear input field
         this.$searchInput.val('');
@@ -113,7 +85,6 @@ class App {
 
   // FETCH USER DATA FROM API AND CREATE USER CARD
   getUserData(username) {
-
     $.ajax({
       url: `https://api.github.com/users/${username}`,
       dataType: 'jsonp',
@@ -125,20 +96,25 @@ class App {
 
   // RENDER HTML OF USER INFO --> INSERT INTO DOM
   createUserCard(data) {
-    this.followerCount = data.data.followers;
-    const handle = data.data.login;
-    const imageLink = data.data.avatar_url;
-    const htmlLink = data.data.html_url;
-    const notFound = data.data.message;
     let cardHTML;
+    const {
+      login: username,
+      avatar_url: imageUrl,
+      html_url: htmlUrl,
+      message: notFoundMessage
+    } = data.data;
 
-    // Render HTML for user card
-    if (notFound) {
-      cardHTML = `<div id="search-fail">Sorry, that username does not exist.</div>`
+    // Set value for follower count
+    this.followerCount = data.data.followers;
+
+
+    // Render HTML for user card - if user exist, create user card, otherwise display error message
+    if (notFoundMessage) {
+      cardHTML = `<p id="search-fail">Sorry, that username does not exist. Please enter a valid username.</p>`
     } else {
       cardHTML = `
-      <a href="${htmlLink}" target="_blank"><img src="${imageLink}"></a>
-      <div class="username">${handle}</div>
+      <a href="${htmlUrl}" target="_blank"><img src="${imageUrl}"></a>
+      <div class="username">${username}</div>
       <div class="l-pad-top-4">
         <h4 class="follower-title">Followers</h4>
         <h3 class="follower-count l-pad-top-1">${this.followerCount}</h3>
@@ -155,30 +131,34 @@ class App {
 
 
   // FETCH LIST OF FOLLOWERS --> RENDER HTML OF LIST OF FOLLOWERS --> INSERT INTO DOM
-  getFollowers(username, pageCount = 1, loadCount) {
-
+  getFollowersData(username, pageCount = 1, loadCount) {
     $.ajax({
       url: `https://api.github.com/users/${username}/followers?per_page=${this.loadAmount}&page=${pageCount}`,
       dataType: 'jsonp',
       success: (data) => {
 
         // Render a list of all the followers
-        const listOfFollowers = this.createFollowersList(data);
+        this.createFollowersList(data);
 
-        // Append the list of followers into the followers container
-        this.$followersList.append(listOfFollowers);
-
-        // If user has more than 30 followers, insert 'Load More' button
-        if (this.followerCount > this.loadAmount) {
-          this.$loadButton.addClass('is-visible');
-        }
-
-        // Remove button if all followers are loaded
-        if (loadCount >= this.followerCount) {
-          this.$loadButton.removeClass('is-visible');
-        }
+        // Hide or show 'load more' button
+        this.toggleLoadButton(loadCount);
       }
     })
+  }
+
+
+
+  // TOGGLE 'LOAD MORE' BUTTON
+  toggleLoadButton(loadCount) {
+    // If user has more than 30 followers, insert 'Load More' button
+    if (this.followerCount > this.loadAmount) {
+      this.$loadButton.addClass('is-visible');
+    }
+
+    // Remove button if all followers are loaded
+    if (loadCount >= this.followerCount) {
+      this.$loadButton.removeClass('is-visible');
+    }
   }
 
 
@@ -186,23 +166,28 @@ class App {
   // RENDER HTML OF FOLLOWERS
   createFollowersList(data) {
 
-    return data.data.map((user) => {
-      const htmlLink = user.html_url;
-      const imageLink = user.avatar_url;
-      const username = user.login;
+    let followerListHTML = data.data.map((user) => {
+      const {
+        html_url: htmlUrl,
+        avatar_url: imageUrl,
+        login: username
+      } = user;
 
       // Render HTML for list of followers
       return `
       <li>
-        <a href="${htmlLink}" target="_blank">
+        <a href="${htmlUrl}" target="_blank">
           <div class="avatar-image">
-            <img src="${imageLink}">
+            <img src="${imageUrl}">
           </div>
           <span>${username}</span>
         </a>
       </li>
       `
     }).join('');
+
+    // Append the list of followers into the followers container
+    this.$followersList.append(followerListHTML);
   }
 
 
@@ -219,7 +204,7 @@ class App {
       loadCount += this.loadAmount;
 
       // Fetch more followers
-      this.getFollowers(username, count, loadCount);
+      this.getFollowersData(username, count, loadCount);
     })
   }
 }

@@ -612,7 +612,6 @@ var App = function () {
     _classCallCheck(this, App);
 
     // REGISTER ELEMENTS
-    this.followerCount;
     this.$form = $('form');
     this.$searchInput = $('#input');
     this.$homeDisplay = $('#home-display');
@@ -621,9 +620,11 @@ var App = function () {
     this.$followersContainer = $('#followers-container');
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
+
+    // SET FOLLOWER COUNT
     this.followerCount;
 
-    // Amount of followers to load each time
+    // Amount of followers to load for each request
     this.loadAmount = 40;
 
     // NAVIGO ROUTING
@@ -631,6 +632,7 @@ var App = function () {
     this.useHash = true;
     this.router = new _navigo2.default(this.root, this.useHash);
 
+    // LISTENS FOR CHANGES IN THE ROUTE (URL)
     this.activateRouter();
 
     // ACTIVATE SEARCH FUNCTION
@@ -645,8 +647,8 @@ var App = function () {
     value: function activateRouter() {
       var _this = this;
 
-      // Route handler that executes callback function when route matches format of '/user/:id'
-      this.router.on('user/:id', function (params, query) {
+      // Route handler that executes callback function when route matches format of '/username/:id'
+      this.router.on('username/:id', function (params) {
         var username = params.id;
 
         // Clear followers list & home display
@@ -660,40 +662,10 @@ var App = function () {
         _this.getUserData(username);
 
         // Make Ajax call to get user's follower list
-        _this.getFollowers(username);
+        _this.getFollowersData(username);
 
         // Activate 'Load More' button
         _this.activateLoadButton(username);
-      }).resolve();
-    }
-
-    // ROUTE HANDLER
-
-  }, {
-    key: 'activateRouter',
-    value: function activateRouter() {
-      var _this2 = this;
-
-      // Route handler that executes callback function when route matches format of '/user/:id'
-      this.router.on('username/:id', function (params, query) {
-
-        var username = params.id;
-
-        // Clear followers list & home display
-        _this2.$followersList.empty();
-        _this2.$homeDisplay.empty();
-
-        // Add bottom border to 'user-info' container
-        _this2.$userInfoContainer.addClass('has-border-bottom');
-
-        // Make Ajax call to get user data
-        _this2.getUserData(username);
-
-        // Make Ajax call to get user's follower list
-        _this2.getFollowers(username);
-
-        // Activate 'Load More' button
-        _this2.activateLoadButton(username);
       }).resolve();
     }
 
@@ -702,20 +674,21 @@ var App = function () {
   }, {
     key: 'getSearchValue',
     value: function getSearchValue() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$searchInput.keypress(function (event) {
         // Get input value (username)
         var username = event.currentTarget.value;
 
+        // Generate new URL when 'Enter' key is pressed
         if (event.which == 13) {
           event.preventDefault();
 
           // Add routing to URL
-          _this3.router.navigate('username/' + username);
+          _this2.router.navigate('username/' + username);
 
           // Clear input field
-          _this3.$searchInput.val('');
+          _this2.$searchInput.val('');
         }
       });
     }
@@ -725,7 +698,6 @@ var App = function () {
   }, {
     key: 'getUserData',
     value: function getUserData(username) {
-
       $.ajax({
         url: 'https://api.github.com/users/' + username,
         dataType: 'jsonp',
@@ -738,18 +710,22 @@ var App = function () {
   }, {
     key: 'createUserCard',
     value: function createUserCard(data) {
-      this.followerCount = data.data.followers;
-      var handle = data.data.login;
-      var imageLink = data.data.avatar_url;
-      var htmlLink = data.data.html_url;
-      var notFound = data.data.message;
       var cardHTML = void 0;
+      var _data$data = data.data,
+          username = _data$data.login,
+          imageUrl = _data$data.avatar_url,
+          htmlUrl = _data$data.html_url,
+          notFoundMessage = _data$data.message;
 
-      // Render HTML for user card
-      if (notFound) {
-        cardHTML = '<div id="search-fail">Sorry, that username does not exist.</div>';
+      // Set value for follower count
+
+      this.followerCount = data.data.followers;
+
+      // Render HTML for user card - if user exist, create user card, otherwise display error message
+      if (notFoundMessage) {
+        cardHTML = '<p id="search-fail">Sorry, that username does not exist. Please enter a valid username.</p>';
       } else {
-        cardHTML = '\n      <a href="' + htmlLink + '" target="_blank"><img src="' + imageLink + '"></a>\n      <div class="username">' + handle + '</div>\n      <div class="l-pad-top-4">\n        <h4 class="follower-title">Followers</h4>\n        <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n      </div>\n      ';
+        cardHTML = '\n      <a href="' + htmlUrl + '" target="_blank"><img src="' + imageUrl + '"></a>\n      <div class="username">' + username + '</div>\n      <div class="l-pad-top-4">\n        <h4 class="follower-title">Followers</h4>\n        <h3 class="follower-count l-pad-top-1">' + this.followerCount + '</h3>\n      </div>\n      ';
       }
 
       // For each new query, clear user info container and 'load more' button, then add new user info into container
@@ -761,13 +737,12 @@ var App = function () {
     // FETCH LIST OF FOLLOWERS --> RENDER HTML OF LIST OF FOLLOWERS --> INSERT INTO DOM
 
   }, {
-    key: 'getFollowers',
-    value: function getFollowers(username) {
-      var _this4 = this;
+    key: 'getFollowersData',
+    value: function getFollowersData(username) {
+      var _this3 = this;
 
       var pageCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var loadCount = arguments[2];
-
 
       $.ajax({
         url: 'https://api.github.com/users/' + username + '/followers?per_page=' + this.loadAmount + '&page=' + pageCount,
@@ -775,22 +750,28 @@ var App = function () {
         success: function success(data) {
 
           // Render a list of all the followers
-          var listOfFollowers = _this4.createFollowersList(data);
+          _this3.createFollowersList(data);
 
-          // Append the list of followers into the followers container
-          _this4.$followersList.append(listOfFollowers);
-
-          // If user has more than 30 followers, insert 'Load More' button
-          if (_this4.followerCount > _this4.loadAmount) {
-            _this4.$loadButton.addClass('is-visible');
-          }
-
-          // Remove button if all followers are loaded
-          if (loadCount >= _this4.followerCount) {
-            _this4.$loadButton.removeClass('is-visible');
-          }
+          // Hide or show 'load more' button
+          _this3.toggleLoadButton(loadCount);
         }
       });
+    }
+
+    // TOGGLE 'LOAD MORE' BUTTON
+
+  }, {
+    key: 'toggleLoadButton',
+    value: function toggleLoadButton(loadCount) {
+      // If user has more than 30 followers, insert 'Load More' button
+      if (this.followerCount > this.loadAmount) {
+        this.$loadButton.addClass('is-visible');
+      }
+
+      // Remove button if all followers are loaded
+      if (loadCount >= this.followerCount) {
+        this.$loadButton.removeClass('is-visible');
+      }
     }
 
     // RENDER HTML OF FOLLOWERS
@@ -799,14 +780,18 @@ var App = function () {
     key: 'createFollowersList',
     value: function createFollowersList(data) {
 
-      return data.data.map(function (user) {
-        var htmlLink = user.html_url;
-        var imageLink = user.avatar_url;
-        var username = user.login;
+      var followerListHTML = data.data.map(function (user) {
+        var htmlUrl = user.html_url,
+            imageUrl = user.avatar_url,
+            username = user.login;
 
         // Render HTML for list of followers
-        return '\n      <li>\n        <a href="' + htmlLink + '" target="_blank">\n          <div class="avatar-image">\n            <img src="' + imageLink + '">\n          </div>\n          <span>' + username + '</span>\n        </a>\n      </li>\n      ';
+
+        return '\n      <li>\n        <a href="' + htmlUrl + '" target="_blank">\n          <div class="avatar-image">\n            <img src="' + imageUrl + '">\n          </div>\n          <span>' + username + '</span>\n        </a>\n      </li>\n      ';
       }).join('');
+
+      // Append the list of followers into the followers container
+      this.$followersList.append(followerListHTML);
     }
 
     // LOAD MORE FOLLOWERS WHEN 'LOAD MORE' BUTTON IS CLICKED
@@ -814,7 +799,7 @@ var App = function () {
   }, {
     key: 'activateLoadButton',
     value: function activateLoadButton(username) {
-      var _this5 = this;
+      var _this4 = this;
 
       var count = 1;
       var loadCount = this.loadAmount; // Count for amount of followers loaded
@@ -823,10 +808,10 @@ var App = function () {
       this.$loadButton.on('click', function (event) {
         event.preventDefault();
         count += 1;
-        loadCount += _this5.loadAmount;
+        loadCount += _this4.loadAmount;
 
         // Fetch more followers
-        _this5.getFollowers(username, count, loadCount);
+        _this4.getFollowersData(username, count, loadCount);
       });
     }
   }]);
