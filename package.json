@@ -33,6 +33,7 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
+    "jquery": "^3.2.1",
     "navigo": "^5.2.0"
   }
 }

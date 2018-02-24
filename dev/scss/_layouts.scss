@@ -32,3 +32,12 @@ $padding: 8px;
   text-align: center;
   width: 960px;
 }
+
+.l-flex {
+  display: flex;
+
+  &.flex-hori {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

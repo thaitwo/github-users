@@ -55,46 +55,59 @@
     li {
       background-color: rgba($black, 0.02);
       border-radius: 3px;
-      box-shadow: 0 1px 4px rgba($black, 0.24);
+      box-shadow: 0 1px 3px rgba($black, 0.12), 0 2px 6px rgba($black, 0.12);
       display: inline-block;
       font-size: 14px;
-      height: 200px;
       margin: 14px;
-      // padding: 10px;
+      padding-bottom: 24px;
       transition: all .3s;
       width: 200px;
 
-      &:hover {
-        background-color: rgba($white, 1);
-        box-shadow: 0 0 8px rgba($black, 0.12), 0 8px 16px rgba($black, 0.24);
-        cursor: pointer;
+      .avatar-image {
+        padding: 20px 0;
 
-        img {
+        img:hover {
           box-shadow: 0 0 2px rgba($black, 0.12), 0 2px 2px rgba($black, 0.24);
         }
       }
 
-      .avatar-image {
-        padding: 20px 0;
-      }
-
       a {
         color: rgba($black, .8);
-        display: block;
-        height: 100%;
-        // padding-top: 20px;
+        display: inline-block;
         text-decoration: none;
-        width: 100%;
+      }
 
-        img {
-          border: 6px solid $white;
-          border-radius: 200px;
-          box-shadow: 0 0 4px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.24);
-          display: block;
-          height: 100px;
-          margin: auto;
-          transition: all .3s;
-          width: 100px;
+      span {
+        display: block;
+      }
+
+      img {
+        border: 6px solid $white;
+        border-radius: 200px;
+        box-shadow: 0 0 4px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.24);
+        display: block;
+        height: 100px;
+        margin: auto;
+        transition: all .3s;
+        width: 100px;
+      }
+
+      button.search-btn {
+        border: none;
+        border-radius: 3px;
+        background-color: rgba($blue-600,.6);
+        color: $white;
+        font-family: $font-primary;
+        font-size: 13px;
+        line-height: 28px;
+        margin-top: 24px;
+        padding: 0 16px;
+        outline: none;
+        transition: all .3s;
+
+        &:hover {
+          background-color: $blue-600;
+          cursor: pointer;
         }
       }
     }

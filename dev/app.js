@@ -1,5 +1,6 @@
 // Import scss file for webpack to compile
 import './scss/style.scss';
+import $ from 'jquery';
 import Navigo from 'navigo';
 
 class App {
@@ -13,6 +14,7 @@ class App {
     this.$followersContainer = $('#followers-container');
     this.$followersList = $('#user-followers');
     this.$loadButton = $('.load-more');
+    this.$userSearchButton;
 
     // SET FOLLOWER COUNT
     this.followerCount;
@@ -130,6 +132,19 @@ class App {
 
 
 
+  // Activate 'Search user' button
+  activateSearchUserButton() {
+    this.$userSearchButton.on('click', (event) => {
+      event.preventDefault();
+      let username = event.currentTarget.id;
+
+      // Add routing to URL
+      this.router.navigate(`username/${username}`);
+    })
+  }
+
+
+
   // FETCH LIST OF FOLLOWERS --> RENDER HTML OF LIST OF FOLLOWERS --> INSERT INTO DOM
   getFollowersData(username, pageCount = 1, loadCount) {
     $.ajax({
@@ -165,7 +180,6 @@ class App {
 
   // RENDER HTML OF FOLLOWERS
   createFollowersList(data) {
-
     let followerListHTML = data.data.map((user) => {
       const {
         html_url: htmlUrl,
@@ -176,18 +190,27 @@ class App {
       // Render HTML for list of followers
       return `
       <li>
-        <a href="${htmlUrl}" target="_blank">
-          <div class="avatar-image">
+        <div class="avatar-image">
+          <a href="${htmlUrl}" target="_blank">
             <img src="${imageUrl}">
-          </div>
-          <span>${username}</span>
-        </a>
+          </a>
+        </div>
+        <span>
+          <a href="${htmlUrl}" target="_blank">${username}</a>
+        </span>
+        <button id="${username}" class="search-btn">Search user</button>
       </li>
       `
     }).join('');
 
     // Append the list of followers into the followers container
     this.$followersList.append(followerListHTML);
+
+    // Register 'search-btn' element
+    this.$userSearchButton = $('.search-btn');
+
+    // Activate User Card Search Function
+    this.activateSearchUserButton();
   }
 
 
