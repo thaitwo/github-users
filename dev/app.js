@@ -74,6 +74,9 @@ class App {
       if (event.which == 13) {
         event.preventDefault();
 
+        this.$userInfoContainer.removeClass('is-hidden');
+        this.$followersContainer.removeClass('is-hidden');
+
         // Add routing to URL
         this.router.navigate(`username/${username}`);
 

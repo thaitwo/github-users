@@ -51,6 +51,10 @@ table {
 ** Colors
 **
 */
+/*
+** Breakpoints
+**
+*/
 /* LAYOUT
 ===================================================== */
 .l-pinned {
@@ -127,16 +131,17 @@ table {
     background-color: rgba(0, 0, 0, 0.04);
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
     color: rgba(0, 0, 0, 0.8);
     font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 36px;
     outline: none;
-    padding: 0 10px;
     text-align: center;
     transition: all .3s;
-    width: 300px; }
+    max-width: 300px;
+    width: 100%; }
     .search-box input[type="text"]::-webkit-input-placeholder {
       color: rgba(0, 0, 0, 0.24);
       font-family: "Roboto", sans-serif;
@@ -159,11 +164,13 @@ input:-webkit-autofill:focus {
   left: 0;
   overflow: auto;
   position: absolute;
-  padding: 0 40px;
+  padding: 40px 40px 0;
   right: 0;
   top: 100px; }
+  @media only screen and (max-width: 480px) {
+    .user-card {
+      padding: 24px 24px 0; } }
   .user-card .user-info {
-    margin: 0 180px;
     padding-bottom: 36px; }
     .user-card .user-info.has-border-bottom {
       border-bottom: 1px solid rgba(0, 0, 0, 0.04); }
@@ -257,15 +264,25 @@ input:-webkit-autofill:focus {
 
 .canvas {
   background: #FFFFFF;
-  bottom: 40px;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.24);
-  left: 40px;
   overflow: hidden;
+  padding: 40px;
   position: fixed;
-  right: 40px;
   text-align: center;
   top: 64px;
+  right: 40px;
+  bottom: 40px;
+  left: 40px;
   z-index: 1; }
+  @media only screen and (max-width: 768px) {
+    .canvas {
+      top: 48px;
+      right: 24px;
+      bottom: 24px;
+      left: 24px; } }
+  @media only screen and (max-width: 480px) {
+    .canvas {
+      padding: 24px; } }
 
 .top-bar {
   height: 64px;
@@ -280,6 +297,9 @@ input:-webkit-autofill:focus {
     text-decoration: none;
     text-transform: uppercase;
     transition: all .3s; }
+    @media only screen and (max-width: 768px) {
+      .top-bar .logo {
+        line-height: 48px; } }
     .top-bar .logo:hover {
       color: rgba(255, 255, 255, 0.6); }
 
@@ -288,7 +308,14 @@ input:-webkit-autofill:focus {
   font-family: "Roboto", sans-serif;
   font-size: 36px;
   font-weight: 300;
-  margin-bottom: 48px; }
+  margin: 32px 0 48px; }
+  @media only screen and (max-width: 480px) {
+    .text-display {
+      font-size: 32px; } }
 
 .octocat {
-  width: 300px; }
+  max-width: 300px;
+  width: 100%; }
+
+.is-hidden {
+  display: none; }

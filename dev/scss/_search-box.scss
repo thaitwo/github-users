@@ -8,16 +8,17 @@
     background-color: rgba($black, .04);
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
     color: rgba($black, .8);
     font-family: $font-primary;
     font-size: 14px;
     font-weight: 400;
     line-height: 36px;
     outline: none;
-    padding: 0 10px;
     text-align: center;
     transition: all .3s;
-    width: 300px;
+    max-width: 300px;
+    width: 100%;
 
     &[type="text"]::-webkit-input-placeholder {
       color: rgba($black, .24);

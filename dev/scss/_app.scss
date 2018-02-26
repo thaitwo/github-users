@@ -4,15 +4,27 @@
 
 .canvas {
   background: $white;
-  bottom: 40px;
   box-shadow: 0 0 16px rgba(0,0,0,0.12), 0 16px 16px rgba(0,0,0,0.24);
-  left: 40px;
   overflow: hidden;
+  padding: 40px;
   position: fixed;
-  right: 40px;
   text-align: center;
   top: 64px;
+  right: 40px;
+  bottom: 40px;
+  left: 40px;
   z-index: 1;
+
+  @media only screen and (max-width: $breakpoint-md) {
+    top: 48px;
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
+  }
+
+  @media only screen and (max-width: $breakpoint-sm) {
+    padding: 24px;
+  }
 }
 
 .top-bar {
@@ -30,6 +42,10 @@
     text-transform: uppercase;
     transition: all .3s;
 
+    @media only screen and (max-width: $breakpoint-md) {
+      line-height: 48px;
+    }
+
     &:hover {
       color: rgba($white, .6);
     }
@@ -41,10 +57,18 @@
   font-family: $font-primary;
   font-size: 36px;
   font-weight: 300;
-  margin-bottom: 48px;
+  margin: 32px 0 48px;
+
+  @media only screen and (max-width: $breakpoint-sm) {
+    font-size: 32px;
+  }
 }
 
 .octocat {
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 
+.is-hidden {
+  display: none;
+}

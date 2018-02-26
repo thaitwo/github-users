@@ -10949,6 +10949,9 @@ var App = function () {
         if (event.which == 13) {
           event.preventDefault();
 
+          _this2.$userInfoContainer.removeClass('is-hidden');
+          _this2.$followersContainer.removeClass('is-hidden');
+
           // Add routing to URL
           _this2.router.navigate('username/' + username);
 

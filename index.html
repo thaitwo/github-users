@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
   <link rel="stylesheet" href="public/css/style.compile.css">
@@ -16,12 +17,12 @@
 
     <div class="animated fadeIn">
       <div class="canvas">
-        <form class="search-box l-pad-top-4">
+        <form class="search-box">
           <input type="text" id="input" placeholder="Search username">
         </form>
 
         <div id="card" class="user-card l-pad-top-8 animated fadeIn">
-          <div id="user-info" class="user-info l-pad-top-4">
+          <div id="user-info" class="user-info is-hidden">
             <!-- Insert user's GitHub handle and follower count here -->
           </div>
 
@@ -30,7 +31,7 @@
             <img src="public/assets/octocat.png" class="octocat">
           </div>
 
-          <div id="followers-container" class="l-pad-top-4 l-pad-bottom-8">
+          <div id="followers-container" class="l-pad-top-4 l-pad-bottom-8 is-hidden">
             <ul id="user-followers" class="followers l-pad-bottom-1">
               <!-- Insert list of followers here -->
             </ul>
