@@ -162,7 +162,8 @@ input:-webkit-autofill:focus {
   font-family: "Roboto", sans-serif;
   bottom: 0;
   left: 0;
-  overflow: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   position: absolute;
   padding: 40px 40px 0;
   right: 0;
